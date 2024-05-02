@@ -1,9 +1,26 @@
 const app = Vue.createApp({
-    data(){
+    data() {
         return {
             
         }
     }
+})
+
+app.component(`items-juego`, {
+    data() {
+        return {
+            
+        }
+    },
+
+    template: `
+        
+    `,
+
+    methods: {
+        
+    }
+    
 })
 
 

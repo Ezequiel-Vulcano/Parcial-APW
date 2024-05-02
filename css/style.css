@@ -1,0 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+
+.accion {
+    font-size: 2rem;
+    background-color: #EAEFD3;
+    border: 0;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    padding: .5rem;
+}
