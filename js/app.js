@@ -1,8 +1,8 @@
 const app = Vue.createApp({
     data() {
         return {
-            showBienvenida: false, //Aca cambie a false la bienvenida para que me muestre primero las preguntas = valor original (false)
-            showCuestionario: true, //Aca tambien cambie = valor original (true)
+            showBienvenida: true, //Aca cambie a false la bienvenida para que me muestre primero las preguntas = valor original (false)
+            showCuestionario: false, //Aca tambien cambie = valor original (true)
             contador: 1,
             datosSeleccionados: [],
             preguntas: [
@@ -80,18 +80,25 @@ const app = Vue.createApp({
 app.component(`componente-bienvenida`, {
     data() {
         return {
-            titulo: "Hola Mundo",
-            parrafo: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero voluptates, omnis repellat quod voluptatem molestiae reprehenderit quasi vitae cupiditate doloremque suscipit dolorum minima assumenda veritatis nostrum ex quisquam dicta libero.",
+            titulo: "El 21 de mayo de 2024, llega una nueva era de Cataclysm",
+            parrafo: "¡ Realiza nuestro test para saber que clase es la indicada para ti !",
             boton: "Comenzar"
         }
     },
 
     template: `
-        <div class="col-12 p-5">
-            <h1>{{titulo}}</h1>
-            <p>{{parrafo}}</p>
-            <button class="btn btn-primary" @click="$emit('comenzar')">{{boton}}</button>
-        </div>
+        <section class="fondo-inicio col-5">
+            <div class="p-5 text-center">
+                <img src="./img/logo.avif" alt="logo del wow" class="img-fluid">
+                <h1 class="mt-5">{{titulo}}</h1>
+                <p class="parrafo-inicio"> {{parrafo}}</p>
+                <button class=" boton-inicio" @click="$emit('comenzar')">{{boton}}</button>
+            </div>
+        </section>
+        <video autoplay muted loop  class="fondo-video">
+            <source src="./video/videoInicio.webm" type="video/mp4">
+            Tu navegador no admite la etiqueta de video.
+        </video>
     `,
 
     methods: {
@@ -117,20 +124,25 @@ app.component(`componente-cuestionario`, {
 
     <div>
         <div class="mt-5" v-for="(item, index) in preguntas.slice((contador-1), contador)" :key="index"> 
-            
-            {{item.pregunta}} 
+            <p class="text-center">
+                {{item.pregunta}} 
+            </p>
 
-            <div v-for="(subItem) in item.opciones" class="d-flex justify-content-center">
-                <label :for="subItem.texto">{{subItem.texto}}
-                    <input 
-                        type="radio" 
-                        :value="subItem.texto" 
-                        :name="'group_' + index" 
-                        :id="subItem.texto" 
-                        @click="$emit('capturorespuesta', subItem.texto)
+            <div class="d-flex align-items-center justify-content-center">
+                <template v-for="(subItem) in item.opciones">
+                    <input class="btn-check"
+                            type="radio" 
+                            :value="subItem.texto" 
+                            :name="'group_' + index" 
+                            :id="subItem.texto" 
+                            @click="$emit('capturorespuesta', subItem.texto)
                     ">
-                </label>
+                    <label :for="subItem.texto" class="btn">
+                        {{subItem.texto}}
+                    </label>
+                </template>
             </div>
+            
             
         </div>
 

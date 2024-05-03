@@ -17,8 +17,8 @@
 <body id="app">
 
 
-    <main class="container">
-        <div class="row">
+    <main class="container-fluid p-0">
+        <div class="row d-flex justify-content-end">
             <componente-bienvenida v-if="showBienvenida" @comenzar="mostrarCuestionario"></componente-bienvenida>
             
             <componente-cuestionario v-if="showCuestionario" 
@@ -32,8 +32,7 @@
             @capturorespuesta="capturorespuesta"></componente-cuestionario>
         </div>
     </main>
-
-
+<img src="" alt="">
     <script src="./js/vue3.js"></script>
     <script src="./js/app.js"></script>
 </body>

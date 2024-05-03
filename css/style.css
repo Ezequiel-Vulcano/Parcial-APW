@@ -1,11 +1,59 @@
 * {
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
     box-sizing: border-box;
     text-decoration: none;
     list-style: none;
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
 }
 
-.contenedor-botones {
+.btn{
+    background-color: aqua;
+}
+
+.btn-check:checked+.btn {
+    background-color: red;
+}
+
+/****************** COMPONENTE Nº1 ******************/
+
+h1 {
     
+    color: white;
+    text-align: center;
+    margin: auto;
+}
+
+.parrafo-inicio {
+    font-size: 20px;
+    color: #FFFFFFB3;
+    margin-top: 2rem;
+}
+
+.boton-inicio {
+    background: linear-gradient(180deg, #aa2409, #761500 100%) !important;
+    border-image: linear-gradient(#f94119, #f83c00, #f94119) 1;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: .5rem 1.2rem;
+}
+
+.boton-inicio:hover {
+    background: rgba(249, 65, 25, 0.7 ) !important;
+    color: rgba(255, 255, 255, 0.819);
+}
+
+.fondo-inicio{
+    padding: 0px !important;
+}
+
+.fondo-video {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: 0px;
 }
