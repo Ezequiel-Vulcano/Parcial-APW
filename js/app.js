@@ -7,22 +7,18 @@ const app = Vue.createApp({
             datosSeleccionados: [],
             preguntas: [
                 {
-                    pregunta: "PREGUNTA 1",
+                    pregunta: "Con cuál de las siguientes facciones te identificas mejor?",
                     opciones: [
-                        { id: 1, texto: "Orcos" },
-                        { id: 2, texto: "Elfos" },
-                        { id: 3, texto: "Humanos" },
-                        { id: 4, texto: "Muertos" },
-                        { id: 5, texto: "Taurens" }
+                        { id: 1, texto: "Horda" },
+                        { id: 2, texto: "Alianza" },
                     ]
                 },
                 {
-                    pregunta: "PREGUNTA 2",
+                    pregunta: "¿En una batalla, cuál sería tu rol ideal?",
                     opciones: [
-                        { id: 1, texto: "Espadas" },
-                        { id: 2, texto: "Arcos" },
-                        { id: 3, texto: "Flecha" },
-
+                        { id: 1, texto: "Sanador" },
+                        { id: 2, texto: "Taque" },
+                        { id: 3, texto: "DPS (Daño por segundo)" },
                     ]
                 },
                 {
@@ -32,7 +28,14 @@ const app = Vue.createApp({
                         { id: 2, texto: "tierra" },
                         { id: 3, texto: "fuego" },
 
-                    ]
+                    ],
+                    preguntaDPS: "De qué manera te gustaría infligir daño",
+                    opcionesDPS: [
+                        { id: 1, texto: "A distancia con armas de fuego." },
+                        { id: 2, texto: "A distancia con potentes echizos." },
+                        { id: 3, texto: "En combate cuerpo a cuerpo con poderosos ataques." },
+
+                    ],
                 },
             ],
             error: "No selecciono ninguna opcion, seleccione alguna para poder continuar.",
@@ -122,11 +125,14 @@ app.component(`componente-cuestionario`, {
 
     template: `
 
-    <div>
+    <div class="fondo-preguntas">
         <div class="mt-5" v-for="(item, index) in preguntas.slice((contador-1), contador)" :key="index"> 
-            <p class="text-center">
+            <p class="text-center pregunta-preguntas">
                 {{item.pregunta}} 
             </p>
+            <span class="posicion-preguntas">
+    pregunta {{contador}}/10
+            </span>
 
             <div class="d-flex align-items-center justify-content-center">
                 <template v-for="(subItem) in item.opciones">
@@ -137,7 +143,7 @@ app.component(`componente-cuestionario`, {
                             :id="subItem.texto" 
                             @click="$emit('capturorespuesta', subItem.texto)
                     ">
-                    <label :for="subItem.texto" class="btn">
+                    <label :for="subItem.texto" class="btn m-5 boton-preguntas btn">
                         {{subItem.texto}}
                     </label>
                 </template>
@@ -147,7 +153,7 @@ app.component(`componente-cuestionario`, {
         </div>
 
         <div v-if="errorbolean" class="mt-4">
-            <p class="text-center">{{error}}</p>
+            <p class="text-center error-pregunta">{{error}}</p>
         </div>
 
         <div class="position-relative">
