@@ -6,11 +6,6 @@
     list-style: none;
 }
 
-.accion {
-    font-size: 2rem;
-    background-color: #EAEFD3;
-    border: 0;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    padding: .5rem;
+.contenedor-botones {
+    
 }

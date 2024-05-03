@@ -20,7 +20,16 @@
     <main class="container">
         <div class="row">
             <componente-bienvenida v-if="showBienvenida" @comenzar="mostrarCuestionario"></componente-bienvenida>
-            <componente-cuestionario v-if="showCuestionario"></componente-cuestionario>
+            
+            <componente-cuestionario v-if="showCuestionario" 
+            :contador="contador" 
+            :preguntas="preguntas" 
+            :error="error"
+            :errorbolean="errorbolean"
+            @incrementar="incrementar" 
+            @decrementar="decrementar" 
+            @capturarValor="capturarValor" 
+            @capturorespuesta="capturorespuesta"></componente-cuestionario>
         </div>
     </main>
 
