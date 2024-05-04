@@ -72,6 +72,7 @@ h1 {
     background: linear-gradient(180deg, #aa2409, #761500 100%) !important;
     border-image: linear-gradient(#f94119, #f83c00, #f94119) 1;
     color: white;
+    max-width: 400px;
 }
 
 .boton-preguntas:hover,

@@ -14,25 +14,37 @@
 
 </head>
 
-<body id="app">
+<body id="app" v-cloak>
 
 
     <main class="container-fluid p-0">
         <div class="row d-flex justify-content-end">
-            <componente-bienvenida v-if="showBienvenida" @comenzar="mostrarCuestionario"></componente-bienvenida>
+            <componente-bienvenida v-if="showBienvenida" 
+                @comenzar="mostrarCuestionario">
+            </componente-bienvenida>
             
             <componente-cuestionario v-if="showCuestionario" 
-            :contador="contador" 
-            :preguntas="preguntas" 
-            :error="error"
-            :errorbolean="errorbolean"
-            @incrementar="incrementar" 
-            @decrementar="decrementar" 
-            @capturarValor="capturarValor" 
-            @capturorespuesta="capturorespuesta"></componente-cuestionario>
+                :contador="contador" 
+                :preguntas="preguntas" 
+                :error="error"
+                :errorbolean="errorbolean"
+                :datosseleccionados="datosseleccionados"
+                @incrementar="incrementar" 
+                @decrementar="decrementar" 
+                @capturorespuesta="capturorespuesta"
+                @resultado="resultado"
+                >
+            </componente-cuestionario>
+
+            <componente-final v-if="showFinal"
+                :clases = "clases"
+                :datosseleccionados = "datosseleccionados"
+                >
+            </componente-final>
+
+
         </div>
     </main>
-<img src="" alt="">
     <script src="./js/vue3.js"></script>
     <script src="./js/app.js"></script>
 </body>
