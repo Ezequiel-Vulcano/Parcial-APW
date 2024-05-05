@@ -139,6 +139,20 @@ const app = Vue.createApp({
     },
 
     methods: {
+        guardarvalor(){
+            this.showBienvenida = true;
+            this.showCuestionario = false; 
+            this.showFinal = false;
+            
+            //Busco en mis clases cual de todas es la que pertenece a la recomendacion de personaje brindada.
+            var clase = this.clases.find(clase => clase.id == this.final.id && clase.funcion == this.final.funcion) 
+
+
+            //Almaceno el dato en el JSON
+            var jsonString = JSON.stringify(clase);
+            localStorage.setItem(clase.nombre, jsonString);
+        },
+
         mostrarCuestionario() {
             this.showBienvenida = false;
             this.showCuestionario = true;
@@ -171,16 +185,15 @@ const app = Vue.createApp({
             }
         },
 
-        capturarValor(){
-
-        },
-
         capturorespuesta(nombre){
             console.log(nombre)
             this.datosseleccionados[this.contador - 1] = nombre
             //console.log(this.datosSeleccionados[this.contador - 1])
             console.log(this.datosseleccionados)
         },
+
+        
+        
     }
 })
 
@@ -359,9 +372,9 @@ app.component(`componente-cuestionario`, {
         </div>
 
         <div class="position-relative">
-            <button class="position-absolute start-0 btn btn-danger m-3" @click="$emit('decrementar')" v-if="contador !== 1">{{prev}}</button>
-            <button class="position-absolute end-0 btn btn-primary m-3" @click="$emit('incrementar')" v-if="contador <= 2">{{next}}</button>
-            <button class="position-absolute end-0 btn btn-primary m-3" @click="$emit('resultado')" v-if="contador == 3">FINALIZAR</button>
+            <button class="position-absolute start-0 btn anterior m-3" @click="$emit('decrementar')" v-if="contador !== 1">{{prev}}</button>
+            <button class="position-absolute end-0 btn siguiente m-3" @click="$emit('incrementar')" v-if="contador <= 2">{{next}}</button>
+            <button class="position-absolute end-0 btn siguiente m-3" @click="$emit('resultado')" v-if="contador == 3">Finalizar</button>
 
         </div>
     </div>
@@ -379,6 +392,7 @@ app.component(`componente-cuestionario`, {
 
 app.component(`componente-final`, {
     props: ['clases', 'final'], 
+    emits: ['guardarvalor'],
 
     template: `
         <div class="fondo-final col-12"> 
@@ -391,13 +405,17 @@ app.component(`componente-final`, {
                             <p class="tarjeta-parrafo">En base a tus elecciones previamente seleccionadas, la clase que te recomendamos jugar es la siguiente.</p>
                         </div>
                         
-                        <div class="col-6 tarjeta-final d-flex p-0">
+                        <div class="col-7 tarjeta-final d-flex p-0">
                             <img :src="item.img" :alt="item.alt" class="tarjeta-imagen p-0"> 
                             <div> 
                                 <h3>{{item.nombre}}</h3>
                                 <span>{{item.rol}}</span>
                                 <p>{{item.descripcion}}</p>
                             </div>
+                        </div>
+                        
+                        <div class="col-6 guardar" @click="$emit('guardarvalor')">
+                            <span> Guardar recomendacion</span>
                         </div>
                         
                     </div>
