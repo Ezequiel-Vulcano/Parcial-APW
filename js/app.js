@@ -294,12 +294,12 @@ app.component(`componente-cuestionario`, {
                         <template v-for="(subItem) in item.opcionesofensivo">
                             <input class="btn-check"
                                 type="radio" 
-                                :value="subItem.texto" 
+                                :value="subItem.id" 
                                 :name="'group_' + index" 
-                                :id="subItem.texto" 
-                                @click="$emit('capturorespuesta', subItem.texto)
+                                :id="subItem.id" 
+                                @click="$emit('capturorespuesta', subItem.id)
                             ">
-                            <label :for="subItem.texto" class="btn m-5 boton-preguntas btn">
+                            <label :for="subItem.id" class="btn m-5 boton-preguntas btn">
                                 {{subItem.texto}}
                             </label>
                         </template>
@@ -316,12 +316,12 @@ app.component(`componente-cuestionario`, {
                         <template v-for="(subItem) in item.opcionestanque">
                             <input class="btn-check"
                                 type="radio" 
-                                :value="subItem.texto" 
+                                :value="subItem.id" 
                                 :name="'group_' + index" 
-                                :id="subItem.texto" 
-                                @click="$emit('capturorespuesta', subItem.texto)
+                                :id="subItem.id" 
+                                @click="$emit('capturorespuesta', subItem.id)
                             ">
-                            <label :for="subItem.texto" class="btn m-5 boton-preguntas btn">
+                            <label :for="subItem.id" class="btn m-5 boton-preguntas btn">
                                 {{subItem.texto}}
                             </label>
                         </template>
