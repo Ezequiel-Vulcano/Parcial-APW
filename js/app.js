@@ -8,7 +8,7 @@ const app = Vue.createApp({
             datosseleccionados: {},  
             error: "No selecciono ninguna opcion, seleccione alguna para poder continuar.",
             errorbolean: false,
-            final: {id: "3", funcion: "ofensivo"},
+            final: {},
             preguntas: [
                 {
                     pregunta: "¿Con cuál de las siguientes facciones te identificas mejor?",
