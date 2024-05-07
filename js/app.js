@@ -5,7 +5,7 @@ const app = Vue.createApp({
             showCuestionario: false, //Aca tambien cambie = valor original (true)
             showFinal: false,
             contador: 1,
-            datosseleccionados: {},  
+            datosseleccionados: {},
             error: "No selecciono ninguna opcion, seleccione alguna para poder continuar.",
             errorbolean: false,
             final: {},
@@ -86,8 +86,8 @@ const app = Vue.createApp({
                     descripcion: "Los guerreros se equipan con cuidado para el combate y se enfrentan a sus enemigos de frente, dejando que los ataques resbalen contra su pesada armadura. Usan diversas tácticas de combate y una gran variedad de tipos de armas para proteger a los combatientes menos hábiles. Los guerreros deben controlar cuidadosamente su ira (el poder detrás de sus ataques más fuertes) para maximizar su efectividad en el combate.",
                     img: "../img/logo/guerrero.avif",
                     alt: "imagen de un guerrero"
-                    
-                    
+
+
                 },
                 {
                     id: "2",
@@ -134,18 +134,39 @@ const app = Vue.createApp({
                     img: "../img/logo/picaro.avif",
                     alt: "imagen de un picaro"
                 }
-            ]
+            ],
+            largostorage: "",
+            objetostorage: []
         }
     },
 
     methods: {
-        guardarvalor(){
+        historial() {
+            this.objetostorage = []
+            this.largostorage = localStorage.length
+
+            if(this.largostorage > 0){
+                for(let i = 0; i < localStorage.length ; i++){
+                    let clave = localStorage.key(i); 
+                    let contenidoLocalStorage = localStorage.getItem(clave);
+                    let contenido = JSON.parse(contenidoLocalStorage)
+
+                    this.objetostorage.push(contenido)
+                    console.log(this.objetostorage)
+
+                }
+
+            }
+        },
+
+
+        guardarvalor() {
             this.showBienvenida = true;
-            this.showCuestionario = false; 
+            this.showCuestionario = false;
             this.showFinal = false;
-            
+
             //Busco en mis clases cual de todas es la que pertenece a la recomendacion de personaje brindada.
-            var clase = this.clases.find(clase => clase.id == this.final.id && clase.funcion == this.final.funcion) 
+            var clase = this.clases.find(clase => clase.id == this.final.id && clase.funcion == this.final.funcion)
 
 
             //Almaceno el dato en el JSON
@@ -158,7 +179,7 @@ const app = Vue.createApp({
             this.showCuestionario = true;
         },
 
-        resultado(){
+        resultado() {
             this.showBienvenida = false;
             this.showCuestionario = false;
             this.showFinal = true
@@ -167,8 +188,8 @@ const app = Vue.createApp({
             console.log(this.final)
         },
 
-        incrementar(){
-            if(this.datosseleccionados[this.contador - 1]){
+        incrementar() {
+            if (this.datosseleccionados[this.contador - 1]) {
                 this.contador++
                 this.errorbolean = false
             } else {
@@ -176,8 +197,8 @@ const app = Vue.createApp({
             }
         },
 
-        decrementar(){
-            if(this.datosseleccionados[this.contador - 1]){
+        decrementar() {
+            if (this.datosseleccionados[this.contador - 1]) {
                 this.contador--
                 this.errorbolean = false
             } else {
@@ -185,19 +206,19 @@ const app = Vue.createApp({
             }
         },
 
-        capturorespuesta(nombre){
+        capturorespuesta(nombre) {
             console.log(nombre)
             this.datosseleccionados[this.contador - 1] = nombre
             //console.log(this.datosSeleccionados[this.contador - 1])
             console.log(this.datosseleccionados)
         },
-
-        
-        
     }
 })
 
 app.component(`componente-bienvenida`, {
+    $emits: ['historial'],
+    props: ['largostorage','objetostorage'],
+
     data() {
         return {
             titulo: "El 21 de mayo de 2024, llega una nueva era de Cataclysm",
@@ -207,32 +228,74 @@ app.component(`componente-bienvenida`, {
     },
 
     template: `
+
         <section class="fondo-inicio col-5">
             <div class="p-5 text-center">
                 <img src="./img/logo.avif" alt="logo del wow" class="img-fluid">
                 <h1 class="mt-5">{{titulo}}</h1>
-                <p class="parrafo-inicio"> {{parrafo}}</p>
-                <button class=" boton-inicio" @click="$emit('comenzar')">{{boton}}</button>
+                <p class="parrafo-inicio">{{parrafo}}</p>
+                <button class="boton-inicio" @click="$emit('comenzar')">{{boton}}</button>
+
+                <!-- BOTON PARA ABRIR EL HISTORIAL -->
+                <button @click="$emit('historial')"
+                        class="historial" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
+                        aria-label="Toggle navigation">Historial
+                </button>
+
+                <!-- HISTORIAL -->
+                <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+                    aria-labelledby="offcanvasDarkNavbarLabel">
+
+                    <div class="offcanvas-header">
+                        <h2 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Historial</h2>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                    </div>
+
+                    <div class="offcanvas-body overflow-auto container p-5 pt-0">
+                        <template v-if="largostorage > 0">                       
+                            <template v-for="(item, index) in objetostorage" :key="index">             
+                                
+                                    <div class="tarjeta-final d-flex p-0 mt-5 row">
+                                        <div class="col-12"> 
+                                            <h3>{{item.nombre}}</h3>
+                                            <span>{{item.funcion}}</span>
+                                        </div>
+                                        <img :src="item.img" alt="item.alt" class="col-12 p-0"> 
+                                    </div>
+                                
+                            </template>                                                                              
+                        </template>
+
+                        <template v-else>
+                            <span> No hay ninguna recomendacion guardada </span>
+                        </template>
+                    </div>   
+
+                </div>
             </div>
         </section>
-        <video autoplay muted loop  class="fondo-video">
+        
+        <video autoplay muted loop class="fondo-video">
             <source src="./video/videoInicio.webm" type="video/mp4">
             Tu navegador no admite la etiqueta de video.
         </video>
+
     `,
 
     methods: {
-        
+
     }
-    
+
 })
 
 app.component(`componente-cuestionario`, {
-    props: ['contador', 'preguntas', 'datosseleccionados', 'error', 'errorbolean'], 
+    props: ['contador', 'preguntas', 'datosseleccionados', 'error', 'errorbolean'],
     emits: ['incrementar', 'decrementar', 'capturorespuesta', 'resultado'],
 
-    data(){
-        return{
+    data() {
+        return {
             next: "siguiente",
             prev: "anterior",
         }
@@ -384,14 +447,14 @@ app.component(`componente-cuestionario`, {
     `,
 
     methods: {
-        
+
 
 
     }
 })
 
 app.component(`componente-final`, {
-    props: ['clases', 'final'], 
+    props: ['clases', 'final'],
     emits: ['guardarvalor'],
 
     template: `
@@ -425,8 +488,10 @@ app.component(`componente-final`, {
     `,
 
     methods: {
-        
+
     }
-    
+
 })
+
+
 app.mount("#app")

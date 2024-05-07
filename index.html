@@ -16,31 +16,17 @@
 
 <body id="app" v-cloak>
 
-
     <main class="container-fluid p-0">
         <div class="row d-flex justify-content-end">
-            <componente-bienvenida v-if="showBienvenida" 
-                @comenzar="mostrarCuestionario">
+            <componente-bienvenida v-if="showBienvenida" @comenzar="mostrarCuestionario" @historial="historial" :largostorage="largostorage" :objetostorage="objetostorage">
             </componente-bienvenida>
-            
-            <componente-cuestionario v-if="showCuestionario" 
-                :contador="contador" 
-                :preguntas="preguntas" 
-                :error="error"
-                :errorbolean="errorbolean"
-                :datosseleccionados="datosseleccionados"
-                @incrementar="incrementar" 
-                @decrementar="decrementar" 
-                @capturorespuesta="capturorespuesta"
-                @resultado="resultado"
-                >
+
+            <componente-cuestionario v-if="showCuestionario" :contador="contador" :preguntas="preguntas" :error="error"
+                :errorbolean="errorbolean" :datosseleccionados="datosseleccionados" @incrementar="incrementar"
+                @decrementar="decrementar" @capturorespuesta="capturorespuesta" @resultado="resultado">
             </componente-cuestionario>
 
-            <componente-final v-if="showFinal"
-                :clases = "clases"
-                :final = "final"
-                @guardarvalor="guardarvalor"
-                >
+            <componente-final v-if="showFinal" :clases="clases" :final="final" @guardarvalor="guardarvalor">
             </componente-final>
 
         </div>
