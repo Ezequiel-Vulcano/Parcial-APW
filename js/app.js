@@ -136,7 +136,8 @@ const app = Vue.createApp({
                 }
             ],
             largostorage: "",
-            objetostorage: []
+            objetostorage: [],
+            btnvaciar: true
         }
     },
 
@@ -172,6 +173,7 @@ const app = Vue.createApp({
             //Almaceno el dato en el JSON
             var jsonString = JSON.stringify(clase);
             localStorage.setItem(clase.nombre, jsonString);
+            window.location.reload()
         },
 
         mostrarCuestionario() {
@@ -212,12 +214,18 @@ const app = Vue.createApp({
             //console.log(this.datosSeleccionados[this.contador - 1])
             console.log(this.datosseleccionados)
         },
+
+        vaciarhistorial(){
+            this.btnvaciar = false
+            this.objetostorage = []
+            localStorage.clear()
+        }
     }
 })
 
 app.component(`componente-bienvenida`, {
-    $emits: ['historial'],
-    props: ['largostorage','objetostorage'],
+    $emits: ['historial', 'vaciarhistorial'],
+    props: ['largostorage','objetostorage', 'btnvaciar'],
 
     data() {
         return {
@@ -230,7 +238,7 @@ app.component(`componente-bienvenida`, {
     template: `
 
         <section class="fondo-inicio col-5">
-            <div class="p-5 text-center">
+            <div class="p-5 text-center position-absolute">
                 <img src="./img/logo.avif" alt="logo del wow" class="img-fluid">
                 <h1 class="mt-5">{{titulo}}</h1>
                 <p class="parrafo-inicio">{{parrafo}}</p>
@@ -254,18 +262,24 @@ app.component(`componente-bienvenida`, {
                     </div>
 
                     <div class="offcanvas-body overflow-auto container p-5 pt-0">
-                        <template v-if="largostorage > 0">                       
-                            <template v-for="(item, index) in objetostorage" :key="index">             
-                                
-                                    <div class="tarjeta-final d-flex p-0 mt-5 row">
-                                        <div class="col-12"> 
-                                            <h3>{{item.nombre}}</h3>
-                                            <span>{{item.funcion}}</span>
+                        <template v-if="largostorage > 0">      
+                            <div>
+                            
+                                <template v-for="(item, index) in objetostorage" :key="index">             
+                                    
+                                        <div class="tarjeta-final d-flex p-0 mb-5 row">
+                                            <div class="col-12"> 
+                                                <h3>{{item.nombre}}</h3>
+                                                <span>{{item.funcion}}</span>
+                                            </div>
+                                            <img :src="item.img" alt="item.alt" class="col-12 p-0"> 
                                         </div>
-                                        <img :src="item.img" alt="item.alt" class="col-12 p-0"> 
-                                    </div>
-                                
-                            </template>                                                                              
+                                    
+                                </template>  
+
+                                <span v-if="btnvaciar" class="p-3 siguiente" @click="$emit('vaciarhistorial')">Vaciar historial</span>
+                                <span v-if="!btnvaciar"> No hay ninguna recomendacion guardada </span>
+                            </div>                                                                           
                         </template>
 
                         <template v-else>

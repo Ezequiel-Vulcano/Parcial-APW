@@ -22,6 +22,7 @@
     height: 45px;
     width: 130px;
     text-transform: capitalize;
+    cursor: pointer;
 }
 
 .siguiente {
