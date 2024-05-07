@@ -187,7 +187,6 @@ const app = Vue.createApp({
             this.showFinal = true
             this.final.id = this.datosseleccionados[2]
             this.final.funcion = this.datosseleccionados[1]
-            console.log(this.final)
         },
 
         incrementar() {
